@@ -60,6 +60,7 @@
       thisProduct.id = id;
       thisProduct.data = data;
       thisProduct.renderInMenu();
+      thisProduct.getElements();
       thisProduct.initAccordion();
       console.log('new Product:', thisProduct);
     }
@@ -83,11 +84,22 @@
 
     }
 
+    getElements() {
+      const thisProduct = this;
+
+      thisProduct.accordionTrigger = thisProduct.element.querySelector(select.menuProduct.clickable);
+      thisProduct.form = thisProduct.element.querySelector(select.menuProduct.form);
+      thisProduct.formInputs = thisProduct.form.querySelectorAll(select.all.formInputs);
+      thisProduct.cartButton = thisProduct.element.querySelector(select.menuProduct.cartButton);
+      thisProduct.priceElem = thisProduct.element.querySelector(select.menuProduct.priceElem);
+    }
+
     initAccordion() {
       const thisProduct = this;
 
       /* find the clickable trigger (the element that should react to clicking) */
-      const clickedProduct = thisProduct.element.querySelector(select.menuProduct.clickable);
+      //const clickedProduct = thisProduct.element.querySelector(select.menuProduct.clickable);
+      const clickedProduct = thisProduct.accordionTrigger;
 
       /* START: click event listener to trigger */
       clickedProduct.addEventListener('click', function (event) {
@@ -106,7 +118,7 @@
         for (let activeProduct of activeProducts) {
 
           /* START: if the active product isn't the element of thisProduct */
-          if (activeProduct != thisProduct.element) {
+          if (!activeProduct == thisProduct.element) {
 
             /* remove class active for the active product */
             activeProduct.classList.remove('active');
