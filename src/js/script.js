@@ -94,6 +94,7 @@
       thisProduct.formInputs = thisProduct.form.querySelectorAll(select.all.formInputs);
       thisProduct.cartButton = thisProduct.element.querySelector(select.menuProduct.cartButton);
       thisProduct.priceElem = thisProduct.element.querySelector(select.menuProduct.priceElem);
+      thisProduct.imageWrapper = thisProduct.element.querySelector(select.menuProduct.imageWrapper);
     }
 
     initAccordion() {
@@ -114,14 +115,13 @@
         thisProduct.element.classList.toggle('active');
 
         /* find all active products */
-        const activeProducts = document.querySelectorAll('.active');
+        const activeProducts = document.querySelectorAll('.product.active');
 
         /* START LOOP: for each active product */
         for (let activeProduct of activeProducts) {
 
           /* START: if the active product isn't the element of thisProduct */
-          //if (activeProduct !== thisProduct.element) {
-          if (!activeProduct == thisProduct.element) {
+          if (activeProduct != thisProduct.element) {
 
             /* remove class active for the active product */
             activeProduct.classList.remove('active');
@@ -200,13 +200,41 @@
 
           }/* END ELSE IF: if option is not selected and option is default */
 
+          // [NEW] find all images of the selected product
+          const allImages = thisProduct.imageWrapper.querySelectorAll('.' + paramId + '-' + optionId);
+
+          /* START IF: if option is selected */
+          if (optionSelected) {
+
+            /* START LOOP: for each image of the option) */
+            for (let image of allImages) {
+
+              /* set class as 'active' for each image of the selected option */
+              image.classList.add('active');
+
+            }  /* END LOOP: for each image of the option) */
+
+          } /* END IF: if option is selected */
+
+          /* START ELSE: if option is not selected */
+          else {
+
+            /* START LOOP: for each image of the option) */
+            for (let image of allImages) {
+
+              /* remove active class from each image of the not selected option */
+              image.classList.remove('active');
+
+            } /* END LOOP: for each image of the option) */
+
+          } /* END ELSE: if option is not selected */
+
         }  /* END LOOP: for each optionId in param.options */
 
       }  /* END LOOP: for each paramId in thisProduct.data.params */
 
       /* set the contents of thisProduct.priceElem to be the value of variable price */
       thisProduct.priceElem.innerHTML = price;
-      //thisProduct.priceElem = price;
       console.log(price);
     }
   }
