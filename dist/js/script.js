@@ -56,7 +56,7 @@
     constructor(id, data) {
       const thisProduct = this;
 
-      /* Add product data */
+      /* add product data */
       thisProduct.id = id;
       thisProduct.data = data;
       thisProduct.renderInMenu();
@@ -68,7 +68,7 @@
       console.log('new Product:', thisProduct);
     }
 
-    /* Add product render method */
+    /* add product render method */
     renderInMenu() {
       const thisProduct = this;
 
@@ -103,37 +103,32 @@
       const thisProduct = this;
 
       /* find the clickable trigger (the element that should react to clicking) */
-      //const clickedProduct = thisProduct.element.querySelector(select.menuProduct.clickable);
       const trigger = thisProduct.accordionTrigger;
 
-      /* START: click event listener to trigger */
+      /* click event listener to trigger */
       trigger.addEventListener('click', function (event) {
 
         /* prevent default action for event */
         event.preventDefault();
 
         /* toggle active class on element of thisProduct */
-        //thisProduct.element.classList.add('active');
         thisProduct.element.classList.toggle('active');
 
         /* find all active products */
         const activeProducts = document.querySelectorAll('.product.active');
 
-        /* START LOOP: for each active product */
+        /* for each active product */
         for (let activeProduct of activeProducts) {
 
-          /* START: if the active product isn't the element of thisProduct */
           if (activeProduct != thisProduct.element) {
 
             /* remove class active for the active product */
             activeProduct.classList.remove('active');
 
-          }/* END: if the active product isn't the element of thisProduct */
+          }
+        }
 
-        }/* END LOOP: for each active product */
-
-
-      });/* END: click event listener to trigger */
+      });
 
     }
 
@@ -163,77 +158,63 @@
       const thisProduct = this;
       //console.log('call the processOrder method');
 
-      /* read all data from the form (using utils.serializeFormToObject) and save it to const formData */
+      /* read all data from the form (using utils.serializeFormToObject) */
       const formData = utils.serializeFormToObject(thisProduct.form);
       //console.log('formData:', formData);
 
-      /* set variable price to equal thisProduct.data.price */
       let price = thisProduct.data.price;
       //console.log('price:', price);
 
-      /* START LOOP: for each paramId in thisProduct.data.params */
       for (let paramId in thisProduct.data.params) {
 
-        /* save the element in thisProduct.data.params with key paramId as const param */
+        /* save the element in thisProduct.data.params with key paramId */
         const param = thisProduct.data.params[paramId];
 
-        /* START LOOP: for each optionId in param.options */
         for (let optionId in param.options) {
 
-          /* save the element in param.options with key optionId as const option */
+          /* save the element in param.options with key optionId */
           const option = param.options[optionId];
 
           /* check if the option is selected */
           const optionSelected = formData.hasOwnProperty(paramId) && formData[paramId].indexOf(optionId) > -1;
 
-          /* START IF: if option is selected and option is not default */
           if (optionSelected && !option.default) {
 
             /* add price of option to variable price */
             price += option.price;
 
-          } /* END IF: if option is selected and option is not default */
-
-          /* START ELSE IF: if option is not selected and option is default */
-          else if (!optionSelected && option.default) {
+          } else if (!optionSelected && option.default) {
 
             /* deduct price of option from price */
             price -= option.price;
 
-          }/* END ELSE IF: if option is not selected and option is default */
+          }
 
           // [NEW] find all images of the selected product
           const allImages = thisProduct.imageWrapper.querySelectorAll('.' + paramId + '-' + optionId);
 
-          /* START IF: if option is selected */
           if (optionSelected) {
 
-            /* START LOOP: for each image of the option */
             for (let image of allImages) {
 
-              /* set class as 'active' for each image of the selected option */
               image.classList.add('active');
 
-            }  /* END LOOP: for each image of the option */
+            }
 
-          } /* END IF: if option is selected */
+          }  else {
 
-          /* START ELSE: if option is not selected */
-          else {
-
-            /* START LOOP: for each image of the option */
             for (let image of allImages) {
 
               /* remove active class from each image of the not selected option */
               image.classList.remove('active');
 
-            } /* END LOOP: for each image of the option */
+            }
 
-          } /* END ELSE: if option is not selected */
+          }
 
-        }  /* END LOOP: for each optionId in param.options */
+        }
 
-      }  /* END LOOP: for each paramId in thisProduct.data.params */
+      }
 
       /* [NEW] multiply price by amount */
       price *= thisProduct.amountWidget.value;
@@ -281,7 +262,7 @@
       const thisWidget = this;
       const newValue = parseInt(value);
 
-      /* [NEW] Add validation */
+      /* [NEW] add validation */
       if (newValue >= settings.amountWidget.defaultMin && newValue <= settings.amountWidget.defaultMax) {
         thisWidget.value = newValue;
         thisWidget.announce();
@@ -321,9 +302,6 @@
     initMenu: function () {
       const thisApp = this;
       console.log('thisApp.data:', thisApp.data);
-
-      //const testProduct = new Product();
-      //console.log('testProduct:', testProduct);
 
       for (let productData in thisApp.data.products) {
         new Product(productData, thisApp.data.products[productData]);
