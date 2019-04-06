@@ -54,7 +54,34 @@ const app = {
     thisApp.pages = Array.from(document.querySelector(select.containerOf.pages).children);
     thisApp.navLinks = Array.from(document.querySelectorAll(select.nav.links));
 
-    thisApp.activatePage(thisApp.pages[0].id);
+    //thisApp.activatePage(thisApp.pages[0].id);
+    let pagesMatchingHash = [];
+
+    if (window.location.hash.length > 2) {
+      const idFromHash = window.location.hash.replace('#/', '');
+
+      pagesMatchingHash = thisApp.pages.filter(function (page) {
+        return page.id == idFromHash;
+      });
+
+      /* for (let page of thisApp.pages) {
+          if (page.id == idFromHash) {
+            pagesMatchingHash.push(page);
+          }
+        }
+      */
+
+      thisApp.activatePage(pagesMatchingHash.length ? pagesMatchingHash[0].id : thisApp.pages[0].id);
+
+      /*
+        if (pagesMatchingHash.length) {
+          thisApp.activatePage(pagesMatchingHash[0].id);
+        } else {
+          thisApp.activatePage(thisApp.pages[0].id);
+        }
+      */
+
+    }
 
     for (let link of thisApp.navLinks) {
       link.addEventListener('click', function (event) {
@@ -77,13 +104,15 @@ const app = {
   activatePage: function (pageId) {
     const thisApp = this;
 
-    for(let link of thisApp.navLinks) {
+    for (let link of thisApp.navLinks) {
       link.classList.toggle(classNames.nav.active, link.getAttribute('href') == '#' + pageId);
     }
 
-    for(let page of thisApp.pages) {
+    for (let page of thisApp.pages) {
       page.classList.toggle(classNames.nav.active, page.getAttribute('id') == pageId);
     }
+
+    window.location.hash = '#/' + pageId;
 
   },
 
