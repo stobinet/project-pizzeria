@@ -6,7 +6,7 @@ import { select, settings, templates, classNames } from './settings.js';
 const app = {
   initMenu: function () {
     const thisApp = this;
-    console.log('thisApp.data:', thisApp.data);
+    //console.log('thisApp.data:', thisApp.data);
 
     for (let productData in thisApp.data.products) {
       //new Product(productData, thisApp.data.products[productData]);
@@ -91,9 +91,9 @@ const app = {
 
         /* TODO: get page id from href */
         const href = clickedElement.getAttribute('href');
-        console.log(href);
+        //console.log(href);
         const id = href.replace('#', '');
-        console.log(id);
+        //console.log(id);
 
         /* TODO: activate page */
         thisApp.activatePage(id);
