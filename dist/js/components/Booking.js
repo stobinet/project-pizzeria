@@ -56,5 +56,35 @@ export class Booking {
     };
 
     console.log('getData params', params);
+
+    const urls = {
+      booking: settings.db.url + '/' + settings.db.booking + '?' + params.booking,
+      eventsCurrent: settings.db.url + '/' + settings.db.event + '?' + params.eventsCurrent,
+      eventsRepeat: settings.db.url + '/' + settings.db.event + '?' + params.eventsRepeat,
+    };
+
+    console.log('getData urls', urls);
+
+    Promise.all([
+      fetch(urls.booking),
+      fetch(urls.eventsCurrent),
+      fetch(urls.eventsRepeat),
+    ])
+      .then(function ([bookingsResponse, eventsCurrentResponse, eventsRepeatResponse]) {
+        return Promise.all([
+          bookingsResponse.json(),
+          eventsCurrentResponse.json(),
+          eventsRepeatResponse.json(),
+        ]);
+      })
+      .then(function ([bookings, eventsCurrent, eventsRepeat]) {
+        thisBooking.parseData(bookings, eventsCurrent, eventsRepeat);
+      });
+  }
+
+  /* TODO data aggregation */
+  parseData() {
+    const thisBooking = this;
+    console.log('parseData', thisBooking);
   }
 }
