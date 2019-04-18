@@ -82,9 +82,39 @@ export class Booking {
       });
   }
 
-  /* TODO data aggregation */
-  parseData() {
+  /* [DONE] data aggregation */
+  parseData(bookings, eventsCurrent, eventsRepeat) {
     const thisBooking = this;
-    console.log('parseData', thisBooking);
+    //console.log('parseData', thisBooking);
+    thisBooking.booked = {};
+
+    //console.log('eventsCurrent', eventsCurrent);
+    for (let eventCurrent of eventsCurrent) {
+      thisBooking.makeBooked(eventCurrent.date, eventCurrent.hour, eventCurrent.duration, eventCurrent.table);
+      console.log('eventCurrent', eventCurrent);
+    }
+
+    for (let booking of bookings) {
+      thisBooking.makeBooked(booking.date, booking.hour, booking.duration, booking.table);
+      //console.log('booking', booking);
+    }
+
+    for (let eventRepeat of eventsRepeat) {
+      for (let i = 0; i <= settings.datePicker.maxDaysInFuture; i++) {
+        thisBooking.makeBooked(utils.dateToStr(utils.addDays(thisBooking.datePicker.minDate, i)), eventRepeat.hour, eventRepeat.duration, eventRepeat.table);
+        //console.log('eventRepeat', eventRepeat);
+      }
+    }
+  }
+
+  makeBooked(date, hour, duration, table) {
+    const thisBooking = this;
+    const hourNumber = utils.hourToNumber(hour);
+    thisBooking.booked[date] = {};
+
+    for (let i = 0; i <= duration * 2; i++) {
+      thisBooking.booked[date][hourNumber + i * 0.5] = [table];
+      console.log('thisBooking.booked', thisBooking.booked[date]);
+    }
   }
 }
