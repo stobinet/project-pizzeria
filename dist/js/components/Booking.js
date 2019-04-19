@@ -1,5 +1,5 @@
 import { AmountWidget } from './AmountWidget.js';
-import { select, templates, settings } from '../settings.js';
+import { select, templates, settings, classNames } from '../settings.js';
 import { utils } from '../utils.js';
 import { DatePicker } from './DatePicker.js';
 import { HourPicker } from './HourPicker.js';
@@ -28,6 +28,7 @@ export class Booking {
     thisBooking.dom.hoursAmount = thisBooking.dom.wrapper.querySelector(select.booking.hoursAmount);
     thisBooking.dom.datePicker = thisBooking.dom.wrapper.querySelector(select.widgets.datePicker.wrapper);
     thisBooking.dom.hourPicker = thisBooking.dom.wrapper.querySelector(select.widgets.hourPicker.wrapper);
+    thisBooking.dom.tables = thisBooking.dom.wrapper.querySelectorAll(select.booking.tables);
   }
 
   initWidgets() {
@@ -37,6 +38,9 @@ export class Booking {
     thisBooking.hoursAmount = new AmountWidget(thisBooking.dom.hoursAmount);
     thisBooking.datePicker = new DatePicker(thisBooking.dom.datePicker);
     thisBooking.hourPicker = new HourPicker(thisBooking.dom.hourPicker);
+    thisBooking.dom.wrapper.addEventListener('updated', function () {
+      thisBooking.updateDOM();
+    });
   }
 
   getData() {
@@ -91,7 +95,7 @@ export class Booking {
     //console.log('eventsCurrent', eventsCurrent);
     for (let eventCurrent of eventsCurrent) {
       thisBooking.makeBooked(eventCurrent.date, eventCurrent.hour, eventCurrent.duration, eventCurrent.table);
-      console.log('eventCurrent', eventCurrent);
+      //console.log('eventCurrent', eventCurrent);
     }
 
     for (let booking of bookings) {
@@ -105,16 +109,41 @@ export class Booking {
         //console.log('eventRepeat', eventRepeat);
       }
     }
+    thisBooking.updateDOM();
   }
 
   makeBooked(date, hour, duration, table) {
     const thisBooking = this;
     const hourNumber = utils.hourToNumber(hour);
-    thisBooking.booked[date] = {};
-
+    if (!thisBooking.booked.hasOwnProperty(date)) {
+      thisBooking.booked[date] = {};
+    }
     for (let i = 0; i <= duration * 2; i++) {
-      thisBooking.booked[date][hourNumber + i * 0.5] = [table];
-      console.log('thisBooking.booked', thisBooking.booked[date]);
+      //thisBooking.booked[date][hourNumber + i * 0.5] = [table];
+      //console.log('thisBooking.booked', thisBooking.booked[date]);
+      if (!thisBooking.booked[date].hasOwnProperty(hourNumber + i * 0.5)) {
+        thisBooking.booked[date][hourNumber + i * 0.5] = [table.toString()];
+      } else {
+        thisBooking.booked[date][hourNumber + i * 0.5].push(table.toString());
+      }
+    }
+  }
+
+  updateDOM() {
+    const thisBooking = this;
+    console.log('updateDOM()');
+
+    /* add current values for date and time */
+    //thisBooking.date = utils.dateToStr(thisBooking.datePicker.value); // utils.js:65 Uncaught TypeError: dateObj.toISOString is not a function
+    thisBooking.date = thisBooking.datePicker.value;
+    thisBooking.hour = utils.hourToNumber(thisBooking.hourPicker.value);
+
+    for (let table of thisBooking.dom.tables) {
+      if (thisBooking.booked[thisBooking.date] != null && thisBooking.booked[thisBooking.date][thisBooking.hour] && thisBooking.booked[thisBooking.date][thisBooking.hour].includes(table.getAttribute(settings.booking.tableIdAttribute))) {
+        table.classList.add(classNames.booking.tableBooked);
+      } else {
+        table.classList.remove(classNames.booking.tableBooked);
+      }
     }
   }
 }
