@@ -626,6 +626,14 @@ input.error, select.error {
   padding-left: 4.5%;
 }
 
+.comment-text h2 {
+  text-transform: uppercase;
+}
+
+.comment-text span {
+  font-style: oblique;
+}
+
 .dot {
   background-color: #eee;
   border: 1px solid #666;
@@ -645,6 +653,11 @@ input.error, select.error {
 .gallery {
   background-color: white;
   padding: 50px 35px;
+}
+
+.gallery a {
+  text-decoration: none;
+  color: #ff6666;
 }
 
 .gallery .row {
