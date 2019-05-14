@@ -30,6 +30,9 @@ export class Booking {
     thisBooking.dom.datePicker = thisBooking.dom.wrapper.querySelector(select.widgets.datePicker.wrapper);
     thisBooking.dom.hourPicker = thisBooking.dom.wrapper.querySelector(select.widgets.hourPicker.wrapper);
     thisBooking.dom.tables = thisBooking.dom.wrapper.querySelectorAll(select.booking.tables);
+    thisBooking.dom.phone = thisBooking.dom.wrapper.querySelector(select.booking.phone);
+    thisBooking.dom.address = thisBooking.dom.wrapper.querySelector(select.booking.address);
+    thisBooking.dom.starters = thisBooking.dom.wrapper.querySelectorAll(select.booking.starters);
   }
 
   initWidgets() {
@@ -53,6 +56,19 @@ export class Booking {
         thisBooking.sendBooking();
       }
     });
+
+    thisBooking.starters = [];
+
+    for (let starter of thisBooking.dom.starters) {
+      starter.addEventListener('change', function () {
+        if (this.checked) {
+          thisBooking.starters.push(starter.value);
+        } else {
+          thisBooking.starters.splice(thisBooking.starters.indexOf(starter.value, 1));
+        }
+      });
+    }
+
     thisBooking.initBooking();
   }
 
@@ -198,10 +214,11 @@ export class Booking {
       date: thisBooking.datePicker.value,
       hour: thisBooking.hourPicker.value,
       table: thisBooking.selectedTable,
-      repeat: false,
       duration: thisBooking.hoursAmount.value,
-      ppl: thisBooking.peopleAmount.value,
-      starters: []
+      people: thisBooking.peopleAmount.value,
+      phone: thisBooking.dom.phone.value,
+      address: thisBooking.dom.address.value,
+      starters: thisBooking.starters,
     };
 
     const options = {
@@ -220,7 +237,7 @@ export class Booking {
       }).then(function () {
       });
     //thisBooking.makeBooked(payload.date, payload.hour, payload.duration, payload.table);
-    payload.table.forEach( function (element) {
+    payload.table.forEach(function (element) {
       thisBooking.makeBooked(payload.date, payload.hour, payload.duration, element);
     });
     //document.location.reload(true);
