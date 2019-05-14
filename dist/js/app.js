@@ -54,6 +54,8 @@ const app = {
     const thisApp = this;
     thisApp.pages = Array.from(document.querySelector(select.containerOf.pages).children);
     thisApp.navLinks = Array.from(document.querySelectorAll(select.nav.links));
+    thisApp.homeLinks = Array.from(document.querySelectorAll(select.nav.homeLinks));
+    thisApp.navLinks = thisApp.navLinks.concat(thisApp.homeLinks);
 
     //thisApp.activatePage(thisApp.pages[0].id);
     let pagesMatchingHash = [];
