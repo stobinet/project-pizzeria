@@ -20,9 +20,10 @@ export class Booking {
     const generatedHTML = templates.bookingWidget();
     thisBooking.dom = {};
     thisBooking.dom.wrapper = element;
-    thisBooking.element = utils.createDOMFromHTML(generatedHTML);
+    thisBooking.dom.wrapper.innerHTML = generatedHTML;
+    /*thisBooking.element = utils.createDOMFromHTML(generatedHTML);
     thisBooking.dom.wrapper.appendChild(thisBooking.element);
-    console.log('render element', element);
+    console.log('render element', element);*/
 
     thisBooking.dom.peopleAmount = thisBooking.dom.wrapper.querySelector(select.booking.peopleAmount);
     thisBooking.dom.hoursAmount = thisBooking.dom.wrapper.querySelector(select.booking.hoursAmount);
@@ -38,19 +39,21 @@ export class Booking {
     thisBooking.hoursAmount = new AmountWidget(thisBooking.dom.hoursAmount);
     thisBooking.datePicker = new DatePicker(thisBooking.dom.datePicker);
     thisBooking.hourPicker = new HourPicker(thisBooking.dom.hourPicker);
-    thisBooking.selectedTable = thisBooking.dom.wrapper.querySelector(select.booking.selected);
+    //thisBooking.selectedTable = thisBooking.dom.wrapper.querySelector(select.booking.selected);
+    thisBooking.selectedTable = [];
     thisBooking.dom.wrapper.addEventListener('updated', function () {
       thisBooking.updateDOM();
     });
     thisBooking.submitBooking = thisBooking.dom.wrapper.querySelector(select.booking.bookingSubmit);
     thisBooking.submitBooking.addEventListener('click', function () {
       event.preventDefault();
-      if (thisBooking.selectedTable == null) {
-        alert('Wybierz wolny stolik');
+      if (thisBooking.selectedTable == []) {
+        alert('Wybierz wolny stolik!');
       } else {
         thisBooking.sendBooking();
       }
     });
+    thisBooking.initBooking();
   }
 
   getData() {
@@ -69,7 +72,7 @@ export class Booking {
       eventsRepeat: settings.db.repeatParam + '&' + utils.queryParams(endDate),
     };
 
-    console.log('getData params', params);
+    //console.log('getData params', params);
 
     const urls = {
       booking: settings.db.url + '/' + settings.db.booking + '?' + params.booking,
@@ -77,7 +80,7 @@ export class Booking {
       eventsRepeat: settings.db.url + '/' + settings.db.event + '?' + params.eventsRepeat,
     };
 
-    console.log('getData urls', urls);
+    //console.log('getData urls', urls);
 
     Promise.all([
       fetch(urls.booking),
@@ -141,7 +144,7 @@ export class Booking {
 
   updateDOM() {
     const thisBooking = this;
-    console.log('updateDOM()');
+    //console.log('updateDOM()');
 
     /* add current values for date and time */
     //thisBooking.date = utils.dateToStr(thisBooking.datePicker.value); // utils.js:65 Uncaught TypeError: dateObj.toISOString is not a function
@@ -153,13 +156,14 @@ export class Booking {
         table.classList.add(classNames.booking.tableBooked);
         if (table.classList.contains(classNames.booking.tableBooked)) {
           table.classList.remove(classNames.booking.selected);
-          thisBooking.selectedTable = null;
+          //thisBooking.selectedTable = null;
+          thisBooking.selectedTable.splice(thisBooking.selectedTable.indexOf(table.getAttribute('data-table')), 1);
         }
       } else {
         table.classList.remove(classNames.booking.tableBooked);
       }
     }
-    thisBooking.initBooking();
+    //thisBooking.initBooking();
   }
 
   initBooking() {
@@ -168,12 +172,18 @@ export class Booking {
     for (let table of thisBooking.dom.tables) {
       table.addEventListener('click', function () {
         if (!table.classList.contains(classNames.booking.tableBooked)) {
-          for (let tab of thisBooking.dom.tables) {
+          /*for (let tab of thisBooking.dom.tables) {
             tab.classList.remove(classNames.booking.selected);
             thisBooking.selectedTable = null;
           }
           table.classList.add(classNames.booking.selected);
-          thisBooking.selectedTable = table.getAttribute('data-table');
+          thisBooking.selectedTable = table.getAttribute('data-table');*/
+          table.classList.toggle(classNames.booking.selected);
+          if (thisBooking.selectedTable.indexOf(table.getAttribute('data-table')) == -1) {
+            thisBooking.selectedTable.push(table.getAttribute('data-table'));
+          } else {
+            thisBooking.selectedTable.splice(thisBooking.selectedTable.indexOf(table.getAttribute('data-table')), 1);
+          }
         }
       });
     }
@@ -205,11 +215,16 @@ export class Booking {
     fetch(url, options)
       .then(function (response) {
         return response.json();
-      }).then(function (parsedResponse) {
-        console.log('parsedResponse', parsedResponse);
+        //}).then(function (parsedResponse) {
+        // console.log('parsedResponse', parsedResponse);
+      }).then(function () {
       });
-    thisBooking.makeBooked(payload.date, payload.hour, payload.duration, payload.table);
-    document.location.reload(true);
+    //thisBooking.makeBooked(payload.date, payload.hour, payload.duration, payload.table);
+    payload.table.forEach( function (element) {
+      thisBooking.makeBooked(payload.date, payload.hour, payload.duration, element);
+    });
+    //document.location.reload(true);
+    thisBooking.updateDOM();
   }
 
 }

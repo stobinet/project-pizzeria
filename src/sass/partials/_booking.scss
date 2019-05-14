@@ -173,6 +173,10 @@
       }
 
     }
+
+    &.selected{
+      background: #ff6b6b;
+    }
   }
 
   [data-table="1"] {

@@ -999,6 +999,10 @@ input.error, select.error {
   opacity: 0.4;
 }
 
+.floor-plan .table.selected {
+  background: #ff6b6b;
+}
+
 .floor-plan [data-table="1"] {
   left: 40px;
   top: 40px;

@@ -1,4 +1,4 @@
-/* global Handlebars, dataSource */
+/* global Handlebars */
 
 export const utils = {};
 
@@ -44,9 +44,9 @@ utils.queryParams = function(params){
 
 utils.convertDataSourceToDbJson = function(){
   const productJson = [];
-  for(let key in dataSource.products){
+  /*for(let key in dataSource.products){
     productJson.push(Object.assign({id: key}, dataSource.products[key]));
-  }
+  }*/
 
   console.log(JSON.stringify({product: productJson, order: []}, null, '  '));
 };
