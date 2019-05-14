@@ -10,6 +10,8 @@
     rel="stylesheet">
   <link href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+  <link rel="stylesheet" type="text/css" href="vendor/slick/slick.css">
+  <link rel="stylesheet" type="text/css" href="vendor/slick/slick-theme.css">
   <link rel="stylesheet" href="vendor/range-slider.min.css">
   <link rel="stylesheet" href="css/style.css">
 </head>
@@ -82,36 +84,31 @@
         </div>
       </div>
       <div class="carousel container">
-        <div class="carousel-coment">
-          <div class="comment-image"><img src="images/home/pizza-3.jpg" alt="Comment image"></div>
-          <div class="comment-text">
+        <div class="carousel-content content-active">
+          <div class="content-image"><img src="images/home/pizza-3.jpg" alt="image"></div>
+          <div class="content-text">
             <h2>Amazing service!</h2>
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam egentas viverra tortor, eu ullamcorper
               dui imperdiet nec. Nunc sed dolor at elit lobortis sodales.</p>
             <span>&#45; Margaret Osborne</span>
           </div>
         </div>
-        <div class="carousel-coment">
-          <div class="comment-image"><img src="images/home/pizza-2.jpg" alt="Comment image"></div>
-          <div class="comment-text">
+        <div class="carousel-content">
+          <div class="content-image"><img src="images/home/pizza-2.jpg" alt="image"></div>
+          <div class="content-text">
             <h2>Amazing service!</h2>
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam egentas viverra tortor, eu ullamcorper
               dui imperdiet nec.</p>
             <span>&#45; Sandra Stone</span>
           </div>
         </div>
-        <div class="carousel-coment comment-active">
-          <div class="comment-image"><img src="images/home/pizza-1.jpg" alt="Comment image"></div>
-          <div class="comment-text">
+        <div class="carousel-content">
+          <div class="content-image"><img src="images/home/pizza-1.jpg" alt="image"></div>
+          <div class="content-text">
             <h2>Amazing service!</h2>
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc sed dolor at elit lobortis sodales.</p>
             <span>&#45; Paul Zaul</span>
           </div>
-        </div>
-        <div>
-          <span class="dot"></span>
-          <span class="dot"></span>
-          <span class="dot active"></span>
         </div>
       </div>
       <div class="gallery container">
@@ -340,8 +337,23 @@
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.1.0/handlebars.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+  <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+  <script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+  <script type="text/javascript" src="vendor/slick/slick.min.js"></script>
   <script src="vendor/range-slider.min.js"></script>
   <script src="js/app.js" type="module"></script>
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      $('.carousel').slick({
+        autoplay: true,
+        autoplaySpeed: 3000,
+        infinite: true,
+        dots: true,
+      });
+    });
+  </script>
+
 </body>
 
 </html>

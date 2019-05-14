@@ -85,34 +85,34 @@
   max-width: 700px;
 }
 
-.carousel-coment {
+.carousel-content {
   height: 100%;
   display: none;
   position: relative;
 }
 
-.carousel-coment div {
+.carousel-content div {
   display: inline-block;
 }
 
-.comment-active {
+.content-active {
   display: block;
 }
 
-.comment-image {
+.content-image {
   text-align: left;
   width: 30%;
   height: 200px;
   margin: 0 auto;
 }
 
-.comment-image img {
+.content-image img {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
 
-.comment-text {
+.content-text {
   text-align: left;
   height: 100%;
   width: 65%;
@@ -120,28 +120,12 @@
   padding-left: 4.5%;
 }
 
-.comment-text h2 {
+.content-text h2 {
   text-transform: uppercase;
 }
 
-.comment-text span {
+.content-text span {
   font-style: oblique;
-}
-
-.dot {
-  background-color: #eee;
-  border: 1px solid #666;
-  border-radius: 5px;
-  box-shadow: inset 1px 1px 1px #888;
-  display: inline-block;
-  height: 10px;
-  width: 10px;
-  margin: 0 5px;
-}
-
-.dot.active {
-  background-color: #333;
-  box-shadow: inset 2px 0px 2px -2px #333;
 }
 
 .gallery {
