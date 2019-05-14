@@ -65,6 +65,9 @@ export const select = {
     tables: '.floor-plan .table',
     bookingSubmit: '.order-confirmation [type="submit"]',
     selected: '.selected',
+    phone: '[name="phone"]',
+    address: '[name="address"]',
+    starters: '.checkbox [type="checkbox"]',
   },
   nav: {
     links: '.main-nav a',
