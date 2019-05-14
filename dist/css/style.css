@@ -510,8 +510,35 @@ input.error, select.error {
   border-radius: 4px;
 }
 
+.home-links h1 {
+  margin: 0;
+  padding: 10px 0;
+  color: white;
+  text-transform: uppercase;
+  font-size: 20px;
+}
+
+.home-links h3 {
+  color: white;
+  font-size: 12px;
+  font-weight: 100;
+  margin: 0;
+}
+
 .home-links div {
   border-radius: 4px;
+}
+
+.home-links .hours {
+  height: 100px;
+  background-color: #ff6666;
+  width: 91%;
+  margin: 0 auto;
+}
+
+.home-links .half {
+  display: inline-block;
+  width: 45%;
 }
 
 .half {
@@ -528,24 +555,12 @@ input.error, select.error {
   top: 60%;
 }
 
-.home-links .half {
-  display: inline-block;
-  width: 45%;
-}
-
 .half img {
   -o-object-fit: cover;
      object-fit: cover;
   width: 100%;
   height: 100px;
   border-radius: 4px;
-}
-
-.home-links .hours {
-  height: 100px;
-  background-color: #ff6666;
-  width: 91%;
-  margin: 0 auto;
 }
 
 .half h1 {
@@ -566,21 +581,6 @@ input.error, select.error {
   transition: 0.8s;
 }
 
-.home-links h1 {
-  margin: 0;
-  padding: 10px 0;
-  color: white;
-  text-transform: uppercase;
-  font-size: 20px;
-}
-
-.home-links h3 {
-  color: white;
-  font-size: 12px;
-  font-weight: 100;
-  margin: 0;
-}
-
 .carousel {
   height: 100%;
   text-align: center;
@@ -598,10 +598,6 @@ input.error, select.error {
 
 .carousel-content div {
   display: inline-block;
-}
-
-.content-active {
-  display: block;
 }
 
 .content-image {
