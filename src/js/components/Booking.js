@@ -64,7 +64,7 @@ export class Booking {
         if (this.checked) {
           thisBooking.starters.push(starter.value);
         } else {
-          thisBooking.starters.splice(thisBooking.starters.indexOf(starter.value, 1));
+          thisBooking.starters.splice(thisBooking.starters.indexOf(starter.value), 1);
         }
       });
     }
