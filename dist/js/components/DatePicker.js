@@ -6,7 +6,8 @@ import { utils } from '../utils.js';
 
 export class DatePicker extends BaseWidget {
   constructor(wrapper) {
-    super(wrapper, new Date());
+    //super(wrapper, new Date());
+    super(wrapper, utils.dateToStr(new Date()));
     const thisWidget = this;
 
     thisWidget.dom.input = thisWidget.dom.wrapper.querySelector(select.widgets.datePicker.input);
