@@ -9,7 +9,7 @@ export class Cart {
     thisCart.deliveryFee = settings.cart.defaultDeliveryFee;
     thisCart.getElements(element);
     thisCart.initActions();
-    console.log('new Cart', thisCart);
+    //console.log('new Cart', thisCart);
   }
 
   getElements(element) {

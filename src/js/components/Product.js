@@ -84,7 +84,7 @@ export class Product {
 
   initOrderForm() {
     const thisProduct = this;
-    console.log('Wywołano metodę initOrderForm()');
+    //console.log('Wywołano metodę initOrderForm()');
 
     thisProduct.form.addEventListener('submit', function (event) {
       event.preventDefault();
